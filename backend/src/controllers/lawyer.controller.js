@@ -10,10 +10,10 @@ const AccessAndRefreshToken =async (lawyerID)=>{
        const refreshToken = await lawyer.generateRefreshToken();
        const accessToken=await lawyer.generateAccessToken();
        lawyer.refreshToken=refreshToken;
-       console.log("Insert It");
+       
        
        const data=await lawyer.save({validateBeforeSave:false})
-       console.log(data);
+      
        
   
        return {accessToken,refreshToken};
@@ -98,11 +98,14 @@ const registerLawyer = async (req, res) => {
 
 const loginLawyer=async(req,res)=>{
   try {
+    
     let {email,password}=req.body;
   
     const lawyer=await Lawyer.findOne({
       email:email
     })
+    
+    
    
     if (!lawyer) {
       return 'No Data Found'
@@ -110,9 +113,10 @@ const loginLawyer=async(req,res)=>{
   
     
     const check=await lawyer.comparePassword(password);
+    console.log(check);
     
     if(!check){
-      return "Invalid Login Credentials"
+      return res.json("Invalid Login Credentials")
     }
   
     const lawyers=await Lawyer.findOne({
@@ -123,7 +127,9 @@ const loginLawyer=async(req,res)=>{
     let {accessToken,refreshToken}=await AccessAndRefreshToken(lawyer._id);
     
     return res.status(200).cookie('refreshToken',refreshToken).cookie('accessToken',accessToken).json({
-        lawyers
+        AccessToken:accessToken,
+        refreshToken:refreshToken,
+        lawyerData:lawyers
     })
   } catch (error) {
       return res.status(401).json({

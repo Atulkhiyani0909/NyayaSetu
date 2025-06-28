@@ -50,6 +50,8 @@ adminSchema.pre("save",async function(next){
 })
 
 adminSchema.methods.comparePassword=async function(InputPassword){
+    
+    
     return await bcrypt.compare(InputPassword,this.password);
 }
 
