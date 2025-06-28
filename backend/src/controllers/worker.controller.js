@@ -9,10 +9,10 @@ import nodemailer from 'nodemailer'
 const AccessAndRefreshToken =async (workerID)=>{
     try {
       const worker = await Worker.findById(workerID);
-       const refreshToken = await Worker.generateRefreshToken();
-       const AccessToken=await Worker.generateAccessToken();
+       const refreshToken = await worker.generateRefreshToken();
+       const AccessToken=await worker.generateAccessToken();
        worker.refreshToken=refreshToken;
-       await Worker.save({validateBeforeSave:false})
+       await worker.save({validateBeforeSave:false})
   
        return {AccessToken,refreshToken};
     } catch (error) {
@@ -22,6 +22,8 @@ const AccessAndRefreshToken =async (workerID)=>{
   
   const registerWorker=async(req,res)=>{
    try {
+     console.log(req.body);
+    
      const {email,name,city,state,e_gov_id,department,password}=req.body;
       
      
@@ -74,6 +76,7 @@ const AccessAndRefreshToken =async (workerID)=>{
      
      let {AccessToken,refreshToken}=await AccessAndRefreshToken(worker._id);
     
+     console.log(AccessToken);
      
    
      return res.status(201).cookie('refreshToken',refreshToken).cookie('accessToken',AccessToken).json({
@@ -89,6 +92,7 @@ const AccessAndRefreshToken =async (workerID)=>{
   const loginWorker=async(req,res)=>{
     try {
       let {email,password}=req.body;
+      console.log(req.body);
       
     
       const worker=await Worker.findOne({
@@ -107,7 +111,7 @@ const AccessAndRefreshToken =async (workerID)=>{
       }).select('-password -refreshToken')
     
     
-      let {AccessToken,refreshToken}=await AccessAndRefreshToken(admin._id);
+      let {AccessToken,refreshToken}=await AccessAndRefreshToken(workers._id);
       
       return res.status(200).cookie('refreshToken',refreshToken).cookie('accessToken',AccessToken).json({
           workers

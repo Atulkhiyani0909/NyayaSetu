@@ -30,8 +30,9 @@ const ticketSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    officerName: {
-        type: String
+    category: {
+        type: String,
+        required:true
     },
     location: {
         city: {

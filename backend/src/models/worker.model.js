@@ -68,7 +68,7 @@ workerSchema.methods.generateRefreshToken=async function(){
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
-        expiresIn:REFRESH_TOKEN_EXPIRY
+        expiresIn:process.env.REFRESH_TOKEN_EXPIRY
     }
 )
 }
@@ -79,7 +79,7 @@ workerSchema.methods.generateAccessToken=async function(){
         Name:this.Name,
         email:this.email
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.ACCESS_TOKEN_SECRET_WORKER,
     {
         expiresIn:process.env.ACCESS_TOKEN_EXPIRY
     }

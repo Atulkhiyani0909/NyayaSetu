@@ -12,7 +12,7 @@ const createTicket = async (req, res) => {
             description,
             city,
             state,
-            officerName,
+            category,
             evidence,
         } = req.body;
 
@@ -20,7 +20,7 @@ const createTicket = async (req, res) => {
             title,
             department,
             description,
-            officerName,
+            category,
             evidence,
             location: { city, state },
             owner: userId
