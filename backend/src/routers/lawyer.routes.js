@@ -25,6 +25,7 @@ router.route('/register').post(
     
     
     router.route('/profile/:id').get(lawyerProfile);
+    
     router.route('/get-lawyers').get(allLawyers)
 
 
