@@ -12,7 +12,6 @@ import Services from "./pages/Services";
 import Complaint from "./pages/Complaint";
 import LegalAid from "./pages/LegalAid";
 import About from "./pages/About";
-import LawyerProfile from './pages/lawyerProfile'
 import { AuthProvider } from "../hooks/auth-context"
 import Dashboard from "./pages/dashboard"
 import { GetStarted } from "./pages/GetStarted"
@@ -26,6 +25,8 @@ import UserLogin from "./pages/UserLogin"
 import EmployeeLogin from "./pages/EmployeeLogin"
 import LawyerLogin from "./pages/LawyerLogin"
 import LawyerHome from "./pages/LawyerHome"
+import UserLawyerProfile from "./pages/UserLawyerProfile"
+import CallHistory from "./pages/CallHistory"
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
@@ -55,10 +56,10 @@ const App = () => {
                 <Route path="/adminlogin" element={<AdminLogin />} />
                 <Route path="/adminhome" element={<AdminHome />} />
                 <Route path="/userlogin" element={<UserLogin />} />
+                <Route path="/lawyercallhistory" element={<CallHistory />} />
                 <Route path="/employeelogin" element={<EmployeeLogin />} />
                 <Route path="/lawyerlogin" element={<LawyerLogin />} />
                 <Route path="/lawyerhome" element={<LawyerHome />} />
-                <Route path="/lawyerProfile/:id" element={<LawyerProfile/>}/>
                 <Route path="/adminDashboard" element={<Dashboard/>}/>
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />

@@ -33,7 +33,7 @@ export const EmployeeRegister = () => {
         setLoading(true);
 
         try {
-        const response = await axios.post(`${BACKEND_URL}/auth/signup`, formData);
+        const response = await axios.post(`${BACKEND_URL}/worker/register`, formData);
         
         if(response.data) {
             toast.success("Registration successfull");
@@ -136,18 +136,6 @@ export const EmployeeRegister = () => {
                     onChange={handleChange}
                     />
                 </div>
-                </div>
-                
-                <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input 
-                    id="PhoneNumber" 
-                    type="tel" 
-                    placeholder="+91 9876543210" 
-                    required
-                    value={formData.PhoneNumber}
-                    onChange={handleChange}
-                    />
                 </div>
                 
                 <div className="space-y-2">

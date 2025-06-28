@@ -76,7 +76,7 @@ workerSchema.methods.generateRefreshToken=async function(){
 workerSchema.methods.generateAccessToken=async function(){
     return jwt.sign({
         _id:this._id,
-        Name:this.Name,
+        name:this.name,
         email:this.email
     },
     process.env.ACCESS_TOKEN_SECRET_WORKER,

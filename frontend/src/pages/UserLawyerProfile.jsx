@@ -5,7 +5,7 @@ import { useEffect,useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const LawyerProfile = () => {
+const UserLawyerProfile = () => {
   const { id } = useParams();
   
   
@@ -117,4 +117,4 @@ const LawyerProfile = () => {
   );
 };
 
-export default LawyerProfile;
+export default UserLawyerProfile;

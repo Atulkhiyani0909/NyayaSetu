@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -31,12 +30,18 @@ const EmployeeLogin = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${BACKEND_URL}/admin/login`, formData);
+      const response = await axios.post(`${BACKEND_URL}/worker/login`, formData);
+      console.log(response.AccessToken);
       
-      if (response.data) {
+      if (response.data && response.data.AccessToken) {
+        
+        console.log(response.data.AccessToken);
+        
         login(response.data.AccessToken);
         toast.success('Login successful!');
-        navigate('/employeehome'); 
+        navigate('/employeehome');
+      } else {
+        toast.error('Invalid response from server');
       }
 
       console.log("Login Attempt");
@@ -110,7 +115,7 @@ const EmployeeLogin = () => {
             <div className="mt-6 text-center">
               <p className="text-gray-600">
                 Don't have an account?{' '}
-                <Link to="/register" className="text-[#FF6B35] hover:underline">
+                <Link to="/employeeregister" className="text-[#FF6B35] hover:underline">
                   Register now
                 </Link>
               </p>

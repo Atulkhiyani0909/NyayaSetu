@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import axios from 'axios'
-import LawyerProfile from './lawyerProfile';
+import LawyerProfile from './UserLawyerProfile';
 
 
 const LegalAid = () => {

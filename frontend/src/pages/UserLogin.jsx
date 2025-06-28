@@ -30,7 +30,7 @@ const UserLogin = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${BACKEND_URL}/admin/login`, formData);
+      const response = await axios.post(`${BACKEND_URL}/user/login`, formData);
       
       if (response.data) {
         login(response.data.AccessToken);
