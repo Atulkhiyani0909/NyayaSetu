@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const {Schema} =mongoose;
 
@@ -51,7 +50,7 @@ const workerSchema=new Schema({
     timestamps:true
 })
 
-workerSchema.plugin(mongooseAggregatePaginate);
+
 
 workerSchema.pre("save",async function(next){
     if(!this.isModified("password")) return next();//return true first time new user 
