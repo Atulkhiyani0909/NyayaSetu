@@ -31,7 +31,7 @@ export const UserRegister = () => {
         setLoading(true);
 
         try {
-        const response = await axios.post(`${BACKEND_URL}/auth/signup`, formData);
+        const response = await axios.post(`${BACKEND_URL}/user/register`, formData);
         
         if(response.data) {
             toast.success("Registration successfull");
@@ -67,7 +67,7 @@ export const UserRegister = () => {
                     type="text" 
                     placeholder="Pawan Kumar" 
                     required 
-                    value={formData.FullName}
+                    value={formData.name}
                     onChange={handleChange}
                     />
                 </div>
@@ -79,7 +79,7 @@ export const UserRegister = () => {
                     type="email" 
                     placeholder="your-email@example.com" 
                     required 
-                    value={formData.Email}
+                    value={formData.email}
                     onChange={handleChange}
                     />
                 </div>
@@ -112,11 +112,11 @@ export const UserRegister = () => {
                 <div className="space-y-2">
                     <Label htmlFor="password">Password</Label>
                     <Input 
-                    id="Password" 
+                    id="password" 
                     type="password" 
                     placeholder="••••••••" 
                     required
-                    value={formData.Password}
+                    value={formData.password}
                     onChange={handleChange}
                     />
                 </div>
@@ -148,7 +148,7 @@ export const UserRegister = () => {
                 <p className="text-gray-600">
                     Already have an account?{' '}
                     <Link to="/userlogin" className="text-[#1A5F7A] hover:underline">
-                    Login
+                        Login
                     </Link>
                 </p>
                 </div>

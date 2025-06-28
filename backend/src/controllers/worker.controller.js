@@ -92,7 +92,6 @@ const AccessAndRefreshToken =async (workerID)=>{
   const loginWorker=async(req,res)=>{
     try {
       let {email,password}=req.body;
-      console.log(req.body);
       
     
       const worker=await Worker.findOne({
@@ -121,7 +120,7 @@ const AccessAndRefreshToken =async (workerID)=>{
         error
       })
     }
-  }
+  };
 
 
 const getTickets=async(req,res)=>{
