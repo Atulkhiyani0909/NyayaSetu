@@ -35,7 +35,7 @@ export const UserRegister = () => {
         
         if(response.data) {
             toast.success("Registration successfull");
-            navigate('/login');
+            navigate('/userlogin');
         }
 
         console.log('Registration attempt');
@@ -147,7 +147,7 @@ export const UserRegister = () => {
                 <div className="mt-6 text-center">
                 <p className="text-gray-600">
                     Already have an account?{' '}
-                    <Link to="/login" className="text-[#1A5F7A] hover:underline">
+                    <Link to="/userlogin" className="text-[#1A5F7A] hover:underline">
                     Login
                     </Link>
                 </p>

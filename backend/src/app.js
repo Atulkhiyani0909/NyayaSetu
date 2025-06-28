@@ -6,7 +6,10 @@ const app = express();
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors());
+app.use(cors({
+  origin: "*", // or use process.env.FRONTEND_URL
+  credentials: true
+}));
 app.use(express.static('public'))
 app.use(cookieParser())
 

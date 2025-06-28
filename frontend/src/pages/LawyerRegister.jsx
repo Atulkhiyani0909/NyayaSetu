@@ -37,11 +37,11 @@ export const LawyerRegister = () => {
         setLoading(true);
 
         try {
-        const response = await axios.post(`${BACKEND_URL}/auth/signup`, formData);
+        const response = await axios.post(`${BACKEND_URL}/lawyer/register`, formData);
         
         if(response.data) {
             toast.success("Registration successfull");
-            navigate('/login');
+            navigate('/lawyerlogin');
         }
 
         console.log('Registration attempt');
@@ -236,7 +236,7 @@ export const LawyerRegister = () => {
                 <div className="mt-6 text-center">
                 <p className="text-gray-600">
                     Already have an account?{' '}
-                    <Link to="/login" className="text-[#1A5F7A] hover:underline">
+                    <Link to="/lawyerlogin" className="text-[#1A5F7A] hover:underline">
                     Login
                     </Link>
                 </p>
