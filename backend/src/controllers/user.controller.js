@@ -97,17 +97,9 @@ const loginUser = async (req, res) => {
     console.log(accessToken);
     
     return res.status(200)
-      .cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        sameSite: 'Lax',
-        secure: false // true if you're on https
-      })
-      .cookie('accessToken', accessToken, {
-        httpOnly: true,
-        sameSite: 'Lax',
-        secure: false
-      })
-      .json({ users });
+      .cookie('refreshToken', refreshToken)
+      .cookie('accessToken', accessToken)
+      .json({ users , accessToken});
 
   } catch (error) {
     return res.status(401).json({ error });

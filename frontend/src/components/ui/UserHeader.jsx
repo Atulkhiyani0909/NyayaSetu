@@ -4,17 +4,17 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Menu } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import TowerBridgeSVG from './icons/MainLogo';
-import { useAuth } from '../../hooks/auth-context';
+import TowerBridgeSVG from "@/components/icons/MainLogo";
+import { useAuth } from "../../../hooks/auth-context";
 
-const LandingHeader = () => {
+const UserHeader = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/userhome');
   };
 
   const AuthButtons = () => {
@@ -42,12 +42,9 @@ const LandingHeader = () => {
   };
 
   const menuItems = [
-    { label: 'Home', path: '/' },
-    { label: 'Services', path: '/services' },
-    // { label: 'Legal Aid', path: '/legal-aid' },
-    // { label: 'Complaint', path: '/complaint' },
-    // { label: 'Admin', path: '/admindashboard' },
-    { label: 'About', path: '/about' },
+    { label: 'Home', path: '/userhome' },
+    { label: 'Legal Help', path: '/userlegalhelp' },
+    { label: 'Complaint', path: '/usercomplaint' },
   ];
 
   return (
@@ -140,4 +137,4 @@ const LandingHeader = () => {
   );
 };
 
-export default LandingHeader;
+export default UserHeader;

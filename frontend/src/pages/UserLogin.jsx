@@ -33,7 +33,8 @@ const UserLogin = () => {
       const response = await axios.post(`${BACKEND_URL}/user/login`, formData);
       
       if (response.data) {
-        login(response.data.AccessToken);
+        login(response.data.accessToken);
+        localStorage.setItem("token", response.data.accessToken);
         toast.success('Login successful!');
         navigate('/userhome'); 
       }

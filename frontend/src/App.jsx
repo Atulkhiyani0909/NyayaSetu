@@ -27,6 +27,8 @@ import LawyerLogin from "./pages/LawyerLogin"
 import LawyerHome from "./pages/LawyerHome"
 import UserLawyerProfile from "./pages/UserLawyerProfile"
 import CallHistory from "./pages/CallHistory"
+import UserHome from "./pages/UserHome"
+import LegalHelp from "./pages/LegalHelp"
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
@@ -45,7 +47,7 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/services" element={<Services />} />
-                <Route path="/complaint" element={<Complaint />} />
+                <Route path="/usercomplaint" element={<Complaint />} />
                 <Route path="/legal-aid" element={<LegalAid />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/getstarted" element={<GetStarted />} />
@@ -56,6 +58,8 @@ const App = () => {
                 <Route path="/adminlogin" element={<AdminLogin />} />
                 <Route path="/adminhome" element={<AdminHome />} />
                 <Route path="/userlogin" element={<UserLogin />} />
+                <Route path="/userhome" element={<UserHome />} />
+                <Route path="/userlegalhelp" element={<LegalHelp />} />
                 <Route path="/lawyercallhistory" element={<CallHistory />} />
                 <Route path="/employeelogin" element={<EmployeeLogin />} />
                 <Route path="/lawyerlogin" element={<LawyerLogin />} />

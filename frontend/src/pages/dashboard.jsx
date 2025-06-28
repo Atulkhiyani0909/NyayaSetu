@@ -90,7 +90,7 @@ const Dashboard = () => {
     // Simulate fetching complaints
     const allComplaints = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/admin/allTickets');
+        const response = await axios.get('http://localhost:8080/admin/allTickets');
         setLength(response.data.length);
         setTickets(response.data);
       } catch (err) {

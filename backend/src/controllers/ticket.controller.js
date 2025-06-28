@@ -1,4 +1,4 @@
-import Ticket from "../models/tickets.model.js";
+import Ticket from "../models/ticket.model.js";
 import User from "../models/user.model.js";
 import  generateAndSendComplaintPDF  from "../utils/generateAndSendComplaintPDF.js";
 const createTicket = async (req, res) => {
@@ -13,15 +13,19 @@ const createTicket = async (req, res) => {
             city,
             state,
             category,
-            evidence,
         } = req.body;
+
+        // If file was uploaded, get its path or filename
+        // let evidence = null;
+        // if (req.file) {
+        //     evidence = req.file.path; // or req.file.filename
+        // }
 
         const ticketData = {
             title,
             department,
             description,
             category,
-            evidence,
             location: { city, state },
             owner: userId
         };

@@ -4,7 +4,7 @@ import { userMiddleware } from "../middlewares/user-auth.middleware.js";
 
 const router = Router();
 
-router.post("/create", userMiddleware, createTicket);
-router.get("/my-tickets", userMiddleware, getUserTickets);
+router.post("/create", createTicket);
+router.get("/my-tickets", getUserTickets);
 
 export default router;
