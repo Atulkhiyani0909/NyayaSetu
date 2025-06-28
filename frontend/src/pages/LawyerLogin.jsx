@@ -30,16 +30,15 @@ const LawyerLogin = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${BACKEND_URL}/admin/login`, formData);
-      
-      if (response.data) {
+      const response = await axios.post(`${BACKEND_URL}/lawyer/login`, formData);
+
+      if (response.data && response.data.AccessToken) {
         login(response.data.AccessToken);
         toast.success('Login successful!');
-        navigate('/lawyerhome'); 
+        navigate('/lawyerhome');
+      } else {
+        toast.error('Invalid response from server');
       }
-
-      console.log("Login Attempt");
-
     } catch (error) {
       toast.error(error.response?.data?.message || 'Login failed');
       console.error('Login error:', error);
@@ -57,38 +56,40 @@ const LawyerLogin = () => {
               <h2 className="text-3xl font-bold text-[#1A5F7A]">Lawyer Login</h2>
               <p className="text-gray-600 mt-2">Access your NyayaSetu account</p>
             </div>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="your-email@example.com" 
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your-email@example.com"
                   required
                   value={formData.email}
                   onChange={handleChange}
+                  autoComplete="username"
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input 
-                  id="password" 
-                  type="password" 
-                  placeholder="••••••••" 
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
                   required
                   value={formData.password}
                   onChange={handleChange}
+                  autoComplete="current-password"
                 />
               </div>
-              
+
               <div className="flex justify-between items-center text-sm">
                 <div className="flex items-center">
-                  <input 
-                    type="checkbox" 
-                    id="remember" 
-                    className="h-4 w-4 text-[#1A5F7A] rounded border-gray-300" 
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    className="h-4 w-4 text-[#1A5F7A] rounded border-gray-300"
                   />
                   <label htmlFor="remember" className="ml-2 text-gray-600">Remember me</label>
                 </div>
@@ -96,20 +97,20 @@ const LawyerLogin = () => {
                   Forgot password?
                 </Link>
               </div>
-              
-              <Button 
-                type="submit" 
+
+              <Button
+                type="submit"
                 className="w-full bg-[#1A5F7A] hover:bg-[#164B61] text-white"
                 disabled={loading}
               >
                 {loading ? 'Logging in...' : 'Login'}
               </Button>
             </form>
-            
+
             <div className="mt-6 text-center">
               <p className="text-gray-600">
                 Don't have an account?{' '}
-                <Link to="/register" className="text-[#FF6B35] hover:underline">
+                <Link to="/lawyerregister" className="text-[#FF6B35] hover:underline">
                   Register now
                 </Link>
               </p>

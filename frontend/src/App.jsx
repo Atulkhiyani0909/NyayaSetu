@@ -25,6 +25,7 @@ import AdminHome from "./pages/AdminHome"
 import UserLogin from "./pages/UserLogin"
 import EmployeeLogin from "./pages/EmployeeLogin"
 import LawyerLogin from "./pages/LawyerLogin"
+import LawyerHome from "./pages/LawyerHome"
 
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ const App = () => {
                 <Route path="/userlogin" element={<UserLogin />} />
                 <Route path="/employeelogin" element={<EmployeeLogin />} />
                 <Route path="/lawyerlogin" element={<LawyerLogin />} />
+                <Route path="/lawyerhome" element={<LawyerHome />} />
                 <Route path="/lawyerProfile/:id" element={<LawyerProfile/>}/>
                 <Route path="/adminDashboard" element={<Dashboard/>}/>
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
