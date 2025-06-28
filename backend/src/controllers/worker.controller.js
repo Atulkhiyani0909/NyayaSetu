@@ -9,8 +9,8 @@ import nodemailer from 'nodemailer'
 const AccessAndRefreshToken =async (workerID)=>{
     try {
       const worker = await Worker.findById(workerID);
-       const refreshToken = await Worker.generateRefreshToken();
-       const AccessToken=await Worker.generateAccessToken();
+       const refreshToken = await worker.generateRefreshToken();
+       const AccessToken=await worker.generateAccessToken();
        worker.refreshToken=refreshToken;
        await worker.save({validateBeforeSave:false})
   
@@ -110,7 +110,7 @@ const AccessAndRefreshToken =async (workerID)=>{
       }).select('-password -refreshToken')
     
     
-      let {AccessToken,refreshToken}=await AccessAndRefreshToken(admin._id);
+      let {AccessToken,refreshToken}=await AccessAndRefreshToken(workers._id);
       
       return res.status(200).cookie('refreshToken',refreshToken).cookie('accessToken',AccessToken).json({
           workers
@@ -120,8 +120,7 @@ const AccessAndRefreshToken =async (workerID)=>{
         error
       })
     }
-  }
-};
+  };
 
 
 const getTickets=async(req,res)=>{
