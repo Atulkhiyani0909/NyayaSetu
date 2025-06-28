@@ -8,7 +8,7 @@ const router=Router()
 router.route('/register').post(
     upload.fields([
       { name: 'image', maxCount: 1 },
-      { name: 'gov_id', maxCount: 1 }
+      { name: 'ID_proof', maxCount: 1 }
     ]),
     registerLawyer
   );

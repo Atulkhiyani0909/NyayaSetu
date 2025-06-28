@@ -1,6 +1,6 @@
 import Worker from "../models/worker.model.js";
 import jwt, { decode } from "jsonwebtoken"
-import Tickets from '../models/tickets.model.js'
+import Tickets from '../models/ticket.model.js'
 import mongoose from "mongoose";
 import nodemailer from 'nodemailer'
 

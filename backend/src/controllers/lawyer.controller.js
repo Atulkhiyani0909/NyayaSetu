@@ -24,15 +24,18 @@ const AccessAndRefreshToken =async (lawyerID)=>{
   
   
 const registerLawyer = async (req, res) => {
+  console.log(req.files)
   try {
+    console.log(req.body);
+    
     const { Name, email, phoneNumber, password, city, state , speciality,experience} = req.body;
 
-    if (!req.files || !req.files.image || !req.files.gov_id) {
+    if (!req.files || !req.files.image || !req.files.ID_proof) {
       return res.status(400).json({ message: "Image and Gov ID are required" });
     }
 
     const imageUpload = await uploadToCloudinary(req.files.image[0].path);
-    const govIdUpload = await uploadToCloudinary(req.files.gov_id[0].path);
+    const govIdUpload = await uploadToCloudinary(req.files.ID_proof[0].path);
 
     if (!imageUpload || !govIdUpload) {
       return res.status(500).json({ message: "Error uploading to Cloudinary" });
