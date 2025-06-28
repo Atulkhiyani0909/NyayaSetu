@@ -4,32 +4,69 @@ import { BACKEND_URL } from "../lib/config";
 import axios from "axios";
 import { toast, Toaster } from "sonner";
 import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input"
-import { Label } from "../components/ui/label"
-import { Upload } from 'lucide-react';
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Upload, CheckCircle, XCircle } from "lucide-react";
 
 export const LawyerRegister = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        name: '',
+        Name: '',
         email: '',
         city: '',
         state: '',
         password: '',
-        image: '',
-        ID_proof: '',
+        image: null,
+        ID_proof: null,
         phoneNumber: '',
         speciality: '',
         experience: '',
     });
     const [loading, setLoading] = useState(false);
-    
+
+    // For file upload feedback
+    const [imageStatus, setImageStatus] = useState(null); // null | "selected" | "removed"
+    const [idProofStatus, setIdProofStatus] = useState(null); // null | "selected" | "removed"
+
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData(prev => ({
-        ...prev,
-        [id]: value
+            ...prev,
+            [id]: value
         }));
+    };
+
+    const handleFileChange = (e) => {
+        const { id, files } = e.target;
+        if (id === "image-upload") {
+            setFormData(prev => ({
+                ...prev,
+                image: files[0]
+            }));
+            setImageStatus(files[0] ? "selected" : null);
+        } else if (id === "idproof-upload") {
+            setFormData(prev => ({
+                ...prev,
+                ID_proof: files[0]
+            }));
+            setIdProofStatus(files[0] ? "selected" : null);
+        }
+    };
+
+    const removeFile = (type) => {
+        if (type === "image") {
+            setFormData(prev => ({
+                ...prev,
+                image: null
+            }));
+            setImageStatus("removed");
+        } else if (type === "idproof") {
+            setFormData(prev => ({
+                ...prev,
+                ID_proof: null
+            }));
+            setIdProofStatus("removed");
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -37,213 +74,261 @@ export const LawyerRegister = () => {
         setLoading(true);
 
         try {
-        const response = await axios.post(`${BACKEND_URL}/lawyer/register`, formData);
-        
-        if(response.data) {
-            toast.success("Registration successfull");
-            navigate('/lawyerlogin');
-        }
+            // Use FormData for file uploads
+            const data = new FormData();
+            Object.entries(formData).forEach(([key, value]) => {
+                if (value) data.append(key, value);
+            });
 
-        console.log('Registration attempt');
+            const response = await axios.post(`${BACKEND_URL}/lawyer/register`, data, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
 
+            if (response.data) {
+                toast.success("Registration successful");
+                navigate('/lawyerlogin');
+            }
+
+            console.log('Registration attempt');
         } catch (error) {
-        toast.error(error.response?.data?.message || 'Registration failed');
-        console.error('Registration error:', error);
+            toast.error(error.response?.data?.message || 'Registration failed');
+            console.error('Registration error:', error);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
-
     };
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Toaster position="top-center" />
-        <div className="container mx-auto flex-grow flex items-center justify-center py-12 px-4">
-            <div className="w-full max-w-md">
-            <div className="bg-white rounded-lg shadow-lg p-8">
-                <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-[#1A5F7A]">Create Lawyer Account</h2>
-                </div>
-                
-                <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name</Label>
-                    <Input 
-                    id="name" 
-                    type="text" 
-                    placeholder="Pawan Kumar" 
-                    required 
-                    value={formData.name}
-                    onChange={handleChange}
-                    />
-                </div>
-                
-                <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input 
-                    id="email" 
-                    type="email" 
-                    placeholder="your-email@example.com" 
-                    required 
-                    value={formData.email}
-                    onChange={handleChange}
-                    />
-                </div>
+            <Toaster position="top-center" />
+            <div className="container mx-auto flex-grow flex items-center justify-center py-12 px-4">
+                <div className="w-full max-w-md">
+                    <div className="bg-white rounded-lg shadow-lg p-8">
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl font-bold text-[#1A5F7A]">Create Lawyer Account</h2>
+                        </div>
 
-                <div className="flex justify-between">
-                    <div className="space-y-2">
-                        <Label htmlFor="email">City</Label>
-                        <Input 
-                        id="city" 
-                        type="text" 
-                        placeholder="Gwalior" 
-                        required 
-                        value={formData.city}
-                        onChange={handleChange}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="email">State</Label>
-                        <Input 
-                        id="state" 
-                        type="text" 
-                        placeholder="Madhya Pradesh"
-                        required 
-                        value={formData.state}
-                        onChange={handleChange}
-                        />
-                    </div>
-                </div>
-                
-                <div className="flex justify-between">
-                    <div className="space-y-2">
-                        <Label >Speciality</Label>
-                        <Input 
-                        id="speciality" 
-                        type="text" 
-                        placeholder="Criminal" 
-                        required
-                        value={formData.speciality}
-                        onChange={handleChange}
-                        />
-                    </div>
-                    
-                    <div className="space-y-2">
-                        <Label >Experience</Label>
-                        <Input 
-                        id="experience" 
-                        type="text" 
-                        required
-                        value={formData.experience}
-                        onChange={handleChange}
-                        />
-                    </div>
-                </div>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="space-y-2">
+                                <Label htmlFor="Name">Full Name</Label>
+                                <Input
+                                    id="Name"
+                                    type="text"
+                                    placeholder="Pawan Kumar"
+                                    required
+                                    value={formData.Name}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input 
-                    id="phoneNumber" 
-                    type="tel" 
-                    placeholder="+91 9876543210" 
-                    required
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    />
-                </div>
-                
-                <div className="flex justify-between space-x-4">
-                    <div className="border border-dashed border-gray-300 rounded-md p-3 text-center">
-                    <Upload className="mx-auto h-3 w-3 text-gray-400" />
-                    <p className="mt-1 text-xs text-gray-600">
-                        Upload Image (JPG, PNG, PDF)
-                    </p>
-                    <Input
-                        id="image-upload"
-                        type="file"
-                        className="hidden"
-                        accept="image/jpeg,image/png,application/pdf"
-                        onChange={handleChange}
-                    />
-                    <Button
-                        type="button"
-                        variant="outline"
-                        className="mt-2 px-2 py-1 text-xs"
-                        onClick={() => document.getElementById('image-upload')?.click()}
-                    >
-                        Select File
-                    </Button>
-                </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="email">Email</Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="your-email@example.com"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                <div className="border border-dashed border-gray-300 rounded-md p-3 text-center">
-                    <Upload className="mx-auto h-3 w-3 text-gray-400" />
-                    <p className="mt-1 text-xs text-gray-600">
-                        Upload ID Proof (JPG, PNG, PDF)
-                    </p>
-                    <Input
-                        id="idproof-upload"
-                        type="file"
-                        className="hidden"
-                        accept="image/jpeg,image/png,application/pdf"
-                        onChange={handleChange}
-                    />
-                    <Button
-                        type="button"
-                        variant="outline"
-                        className="mt-2 px-2 py-1 text-xs"
-                        onClick={() => document.getElementById('idproof-upload')?.click()}
-                    >
-                        Select File
-                    </Button>
-                </div>
-                </div>
-                
-                <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input 
-                    id="Password" 
-                    type="password" 
-                    placeholder="••••••••" 
-                    required
-                    value={formData.Password}
-                    onChange={handleChange}
-                    />
-                </div>
-                
-                <div className="flex items-center">
-                    <input 
-                    type="checkbox" 
-                    id="terms" 
-                    required
-                    className="h-4 w-4 text-[#1A5F7A] rounded border-gray-300" 
-                    />
-                    <label htmlFor="terms" className="ml-2 text-gray-600 text-sm">
-                    I agree to the{' '}
-                    <Link to="/terms" className="text-[#1A5F7A] hover:underline">
-                        Terms and Conditions
-                    </Link>
-                    </label>
-                </div>
-                
-                <Button
-                    type="submit" 
-                    className="w-full bg-[#FF6B35] hover:bg-orange-600 text-white"
-                >
-                    {loading ? 'Creating Account...' : 'Create Account'}
-                </Button>
-                </form>
-                
-                <div className="mt-6 text-center">
-                <p className="text-gray-600">
-                    Already have an account?{' '}
-                    <Link to="/lawyerlogin" className="text-[#1A5F7A] hover:underline">
-                    Login
-                    </Link>
-                </p>
+                            <div className="flex justify-between">
+                                <div className="space-y-2">
+                                    <Label htmlFor="city">City</Label>
+                                    <Input
+                                        id="city"
+                                        type="text"
+                                        placeholder="Gwalior"
+                                        required
+                                        value={formData.city}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="state">State</Label>
+                                    <Input
+                                        id="state"
+                                        type="text"
+                                        placeholder="Madhya Pradesh"
+                                        required
+                                        value={formData.state}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex justify-between">
+                                <div className="space-y-2">
+                                    <Label htmlFor="speciality">Speciality</Label>
+                                    <Input
+                                        id="speciality"
+                                        type="text"
+                                        placeholder="Criminal"
+                                        required
+                                        value={formData.speciality}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="experience">Experience</Label>
+                                    <Input
+                                        id="experience"
+                                        type="text"
+                                        required
+                                        value={formData.experience}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="phoneNumber">Phone Number</Label>
+                                <Input
+                                    id="phoneNumber"
+                                    type="tel"
+                                    placeholder="+91 9876543210"
+                                    required
+                                    value={formData.phoneNumber}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="flex justify-between space-x-4">
+                                {/* Image Upload */}
+                                <div className="border border-dashed border-gray-300 rounded-md p-3 text-center w-1/2">
+                                    <Upload className="mx-auto h-3 w-3 text-gray-400" />
+                                    <p className="mt-1 text-xs text-gray-600">
+                                        Upload Image (JPG, PNG, PDF)
+                                    </p>
+                                    <Input
+                                        id="image-upload"
+                                        type="file"
+                                        className="hidden"
+                                        accept="image/jpeg,image/png,application/pdf"
+                                        onChange={handleFileChange}
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        className="mt-2 px-2 py-1 text-xs"
+                                        onClick={() => document.getElementById('image-upload')?.click()}
+                                    >
+                                        Select File
+                                    </Button>
+                                    <div className="mt-2 flex items-center justify-center min-h-[24px]">
+                                        {formData.image && imageStatus === "selected" && (
+                                            <span className="flex items-center text-green-600 text-xs">
+                                                <CheckCircle className="w-4 h-4 mr-1" /> {formData.image.name}
+                                                <button
+                                                    type="button"
+                                                    className="ml-2 text-red-500"
+                                                    onClick={() => removeFile("image")}
+                                                    aria-label="Remove file"
+                                                >
+                                                    <XCircle className="w-4 h-4" />
+                                                </button>
+                                            </span>
+                                        )}
+                                        {imageStatus === "removed" && (
+                                            <span className="flex items-center text-red-500 text-xs">
+                                                File removed
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* ID Proof Upload */}
+                                <div className="border border-dashed border-gray-300 rounded-md p-3 text-center w-1/2">
+                                    <Upload className="mx-auto h-3 w-3 text-gray-400" />
+                                    <p className="mt-1 text-xs text-gray-600">
+                                        Upload ID Proof (JPG, PNG, PDF)
+                                    </p>
+                                    <Input
+                                        id="idproof-upload"
+                                        type="file"
+                                        className="hidden"
+                                        accept="image/jpeg,image/png,application/pdf"
+                                        onChange={handleFileChange}
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        className="mt-2 px-2 py-1 text-xs"
+                                        onClick={() => document.getElementById('idproof-upload')?.click()}
+                                    >
+                                        Select File
+                                    </Button>
+                                    <div className="mt-2 flex items-center justify-center min-h-[24px]">
+                                        {formData.ID_proof && idProofStatus === "selected" && (
+                                            <span className="flex items-center text-green-600 text-xs">
+                                                <CheckCircle className="w-4 h-4 mr-1" /> {formData.ID_proof.name}
+                                                <button
+                                                    type="button"
+                                                    className="ml-2 text-red-500"
+                                                    onClick={() => removeFile("idproof")}
+                                                    aria-label="Remove file"
+                                                >
+                                                    <XCircle className="w-4 h-4" />
+                                                </button>
+                                            </span>
+                                        )}
+                                        {idProofStatus === "removed" && (
+                                            <span className="flex items-center text-red-500 text-xs">
+                                                File removed
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="password">Password</Label>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    placeholder="••••••••"
+                                    required
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <div className="flex items-center">
+                                <input
+                                    type="checkbox"
+                                    id="terms"
+                                    required
+                                    className="h-4 w-4 text-[#1A5F7A] rounded border-gray-300"
+                                />
+                                <label htmlFor="terms" className="ml-2 text-gray-600 text-sm">
+                                    I agree to the{' '}
+                                    <Link to="/terms" className="text-[#1A5F7A] hover:underline">
+                                        Terms and Conditions
+                                    </Link>
+                                </label>
+                            </div>
+
+                            <Button
+                                type="submit"
+                                className="w-full bg-[#FF6B35] hover:bg-orange-600 text-white"
+                                disabled={loading}
+                            >
+                                {loading ? 'Creating Account...' : 'Create Account'}
+                            </Button>
+                        </form>
+
+                        <div className="mt-6 text-center">
+                            <p className="text-gray-600">
+                                Already have an account?{' '}
+                                <Link to="/lawyerlogin" className="text-[#1A5F7A] hover:underline">
+                                    Login
+                                </Link>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            </div>
-        </div>
         </div>
     );
 };
