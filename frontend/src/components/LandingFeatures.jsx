@@ -27,7 +27,7 @@ const features = [
     icon: HelpCircle,
     title: "Support Chatbot",
     description: "NayaSetuAI-powered assistance for quick resolutions.",
-    link: "https://huggingface.co/spaces/AdiSomani123/NyayaSetu" 
+    link: "https://huggingface.co/spaces/AdiSomani123/NyayaSetu-Legal-Assistant" 
   },
   {
     icon: ShieldCheck,
