@@ -29,7 +29,8 @@ Nyayasetu is a comprehensive data collection platform designed to transform gove
      bash
      npm run dev
      
-   - This will start the Vite-powered frontend and the backend server. Vite will provide a local development link (usually http://localhost:3000 for frontend).
+   - This will start the Vite-powered frontend and the backend server. Vite will provide a local development link (usually http://localhost:5173 for frontend).
+     (usually http://localhost:8080 for backend)
 
 4. *Access the Application*
    - Open your browser and go to the link provided by Vite (typically http://localhost:5173) to use the platform.
