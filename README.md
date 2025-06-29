@@ -4,6 +4,43 @@
 
 Nyayasetu is a comprehensive data collection platform designed to transform governance in India by building an integrated legal ecosystem. Our platform addresses the critical data bottleneck faced by government authorities, turning routine citizen interactions into actionable insights for predictive analytics and evidence-based policy making. By combining complaint management, AI-powered citizen assistance, and legal service connections, Nyayasetu empowers both citizens and authorities to create a smarter, more responsive government.
 
+## Steps to Run the Project
+
+1. *Clone the Repository*
+   bash
+   git clone https://github.com/Atulkhiyani0909/NyayaSetu.git
+   cd 
+   
+
+2. *Install Dependencies*
+   - Navigate to the frontend directory and install dependencies:
+     bash
+     cd frontend
+     npm install
+     
+   - Navigate to the backend directory and install dependencies:
+     bash
+     cd ../backend
+     npm install
+     
+
+3. *Start the Development Servers*
+   - In both the frontend and backend directories, start the servers using:
+     bash
+     npm run dev
+     
+   - This will start the Vite-powered frontend and the backend server. Vite will provide a local development link (usually http://localhost:3000 for frontend).
+
+4. *Access the Application*
+   - Open your browser and go to the link provided by Vite (typically http://localhost:5173) to use the platform.
+
+*Note:*  
+- Make sure you have [Node.js](https://nodejs.org/) installed on your system.
+- Ensure any required environment variables are set up as described in the .env.example files.
+- For any issues, refer to the troubleshooting section or contact the maintainers.
+
+This streamlined process will get your project up and running in just a few steps!
+
 ## Table of Contents
 
 - Introduction
