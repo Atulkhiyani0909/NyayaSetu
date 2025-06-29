@@ -1,5 +1,8 @@
 ## Nyayasetu: Revolutionizing Governance with Data-Driven Legal Ecosystems
 
+*The bot is live at* : https://huggingface.co/spaces/AdiSomani123/NyayaSetu-Legal-Assistant
+
+
 ### Executive Summary
 
 Nyayasetu is a comprehensive data collection platform designed to transform governance in India by building an integrated legal ecosystem. Our platform addresses the critical data bottleneck faced by government authorities, turning routine citizen interactions into actionable insights for predictive analytics and evidence-based policy making. By combining complaint management, AI-powered citizen assistance, and legal service connections, Nyayasetu empowers both citizens and authorities to create a smarter, more responsive government.
